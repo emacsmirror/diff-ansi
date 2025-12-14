@@ -5,6 +5,7 @@ Change Log
 
 - Development (2025-02-09)
 
+  - Fix incorrect file argument to ``declare-function``.
   - Fix #4: Message in site-file causes multi-process diff to fail.
   - Fix ``ydiff`` defaulting to 80 column width.
   - Fix an error, attempting to use a closed buffer when ``diff-ansi-method`` is set to ``'progressive``.

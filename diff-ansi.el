@@ -156,7 +156,7 @@ It can be useful to show progress when viewing very large diffs."
 ;; Forward Declarations
 
 ;; Needed since the the `eval' causes the function to be hidden.
-(declare-function diff-ansi--ansi-color-apply-on-region-with-bg-impl "diff-ansi")
+(declare-function diff-ansi--ansi-color-apply-on-region-with-bg-impl "ansi-color")
 (declare-function magit-wash-sequence "magit-section")
 
 
