@@ -242,9 +242,9 @@ The following keyword arguments are supported:
          (pop body))))
     (when extra-keywords
       (error "Invalid keywords: %s" (mapconcat #'symbol-name extra-keywords " ")))
-    (let ((temp-file (make-symbol "temp-file"))
-          (prefix (or prefix ""))
-          (suffix (or suffix "")))
+    (let ((temp-file (make-symbol "temp-file")))
+      (setq prefix (or prefix ""))
+      (setq suffix (or suffix ""))
       `(let* ((,temp-file (file-name-as-directory (make-temp-file ,prefix t ,suffix nil)))
               (,name (file-name-as-directory ,temp-file)))
          (unwind-protect
