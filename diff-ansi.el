@@ -226,7 +226,7 @@ The following keyword arguments are supported:
 
 :suffix STRING
   If non-nil, pass STRING to `make-temp-file' as the SUFFIX argument."
-  (declare (indent 1) (debug (symbolp body)))
+  (declare (indent 1) (debug (sexp body)))
   (unless (symbolp name)
     (error "Expected name to be as symbol, found %S" (type-of name)))
   (let ((keyw nil)
