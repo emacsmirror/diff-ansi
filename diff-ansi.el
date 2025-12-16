@@ -44,7 +44,7 @@
 
 (defgroup diff-ansi nil
   "Display diffs using external display commands."
-  :group 'scrolling)
+  :group 'diff)
 
 (defcustom diff-ansi-use-magit-revision-diff t
   "Use diff-ansi for `magit-revision-mode'."
