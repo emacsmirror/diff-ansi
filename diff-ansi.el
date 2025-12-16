@@ -1014,8 +1014,9 @@ Return the buffer used to write data into on success."
 ;;;###autoload
 (define-minor-mode diff-ansi-mode
   "Enable `diff-ansi' integration."
-  :global
-  nil
+  :global nil
+  :lighter nil
+
   (cond
    (diff-ansi-mode
     (diff-ansi--enable))
