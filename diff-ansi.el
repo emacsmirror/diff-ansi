@@ -246,7 +246,7 @@ The following keyword arguments are supported:
       (setq prefix (or prefix ""))
       (setq suffix (or suffix ""))
       `(let* ((,temp-file (file-name-as-directory (make-temp-file ,prefix t ,suffix nil)))
-              (,name (file-name-as-directory ,temp-file)))
+              (,name ,temp-file))
          (unwind-protect
              (progn
                ,@body)
