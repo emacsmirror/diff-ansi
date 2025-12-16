@@ -997,7 +997,8 @@ Return the buffer used to write data into on success."
 
     (cond
      (create-buffer
-      (set-buffer-modified-p nil)
+      (with-current-buffer target-buf
+        (set-buffer-modified-p nil))
       target-buf)
      (t
       (current-buffer)))))
