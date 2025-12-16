@@ -61,7 +61,7 @@
            (symbol :tag "Use `diff-ansi-tool-custom' command." custom)))
 
 ;; Note that this has its values extracted and isn't used directly.
-(defface diff-ansi-default-face (list (list t :foreground "black" :background "black"))
+(defface diff-ansi-default-face (list (list t :foreground "white" :background "black"))
   "Face used to render black color."
   :group 'diff-ansi)
 
