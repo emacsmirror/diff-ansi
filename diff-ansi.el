@@ -489,10 +489,10 @@ Optional keywords in KEYWORDS.
     (unless jobs
       (setq jobs
             (cond
-             ((fboundp 'num-processors) ; Emacs 29+
-              (* 2 (num-processors)))
+             (diff-ansi-multiprocess-jobs
+              diff-ansi-multiprocess-jobs)
              (t
-              (or diff-ansi-multiprocess-jobs 64)))))
+              (* 2 (num-processors))))))
 
     (let* ((args-len (length args))
            (results (make-vector args-len nil))
