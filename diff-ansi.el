@@ -1,4 +1,4 @@
-;;; diff-ansi.el --- Display diff's using alternative diffing tools -*- lexical-binding: t -*-
+;;; diff-ansi.el --- Display diffs using alternative diffing tools -*- lexical-binding: t -*-
 
 ;; SPDX-License-Identifier: GPL-2.0-or-later
 ;; Copyright (C) 2021  Campbell Barton
@@ -13,7 +13,7 @@
 
 ;; Support showing color diffs using external tools.
 
-;;; Usage
+;;; Usage:
 
 ;; See readme.rst.
 ;;
@@ -43,7 +43,7 @@
 ;; Custom Variables
 
 (defgroup diff-ansi nil
-  "Configure smooth scrolling when jumping to new locations."
+  "Display diffs using external display commands."
   :group 'scrolling)
 
 (defcustom diff-ansi-use-magit-revision-diff t
@@ -60,7 +60,7 @@
 
            (symbol :tag "Use `diff-ansi-tool-custom' command." custom)))
 
-;; Note that this has it's values extracted and isn't used directly.
+;; Note that this has its values extracted and isn't used directly.
 (defface diff-ansi-default-face (list (list t :foreground "black" :background "black"))
   "Face used to render black color."
   :group 'diff-ansi)
@@ -104,7 +104,7 @@ Used for `progressive' and `multiprocess' methods."
   "Number of simultaneous jobs to launch when using `multiprocess' method.
 
 A nil value detects the number of processes on the system (when supported)."
-  :type 'integer)
+  :type '(choice (const :tag "Auto-detect" nil) integer))
 
 (defcustom diff-ansi-verbose-progress nil
   "When enabled, show the progress of progressive conversion in the echo area.
@@ -155,7 +155,7 @@ It can be useful to show progress when viewing very large diffs."
 ;; ---------------------------------------------------------------------------
 ;; Forward Declarations
 
-;; Needed since the the `eval' causes the function to be hidden.
+;; Needed since the `eval' causes the function to be hidden.
 (declare-function diff-ansi--ansi-color-apply-on-region-with-bg-impl "ansi-color")
 (declare-function magit-wash-sequence "magit-section")
 
@@ -215,9 +215,9 @@ see `advice-add' documentation."
          (message omessage)))))
 
 (defmacro diff-ansi--with-temp-directory (name &rest body)
-  "Bind NAME to the name of a new temporary file and evaluate BODY.
+  "Bind NAME to the name of a new temporary directory and evaluate BODY.
 Delete the temporary file after BODY exits normally or non-locally.
-NAME will be bound to the file name of the temporary file.
+NAME will be bound to the file name of the temporary directory.
 
 The following keyword arguments are supported:
 
@@ -766,7 +766,7 @@ Store the result in TARGET-BUF when non-nil."
         (diff-ansi--call-process-pipe-chain diff-command :input diff-str :output (current-buffer))
         (setq end (point))
 
-        ;; Postpone activation until the timer can take it's self as an argument.
+        ;; Postpone activation until the timer can take itself as an argument.
         (diff-ansi--with-advice ((#'timer-activate :override (lambda (&rest _) nil)))
           (setq diff-ansi--ansi-color-timer (run-at-time 0.0 0.001 nil))
           (timer-set-function diff-ansi--ansi-color-timer #'diff-ansi-progressive-highlight-impl
@@ -809,7 +809,7 @@ Store the result in TARGET-BUF when non-nil."
                    (emacs-eval-arg (diff-ansi--ansi-color-apply-on-region-with-bg-str black-color))
 
                    (point-prev (point))
-                   ;; Index (for unique names.
+                   ;; Index (for unique names).
                    (i 0))
               (while (null (eobp))
                 (setq point-prev (point))
