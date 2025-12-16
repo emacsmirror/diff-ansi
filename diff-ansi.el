@@ -294,7 +294,7 @@ Additional keyword arguments may also be passed in.
                 (:input
                  (cond
                   ((null v)) ; No input.
-                  ((eq v t)) ; String input (standard input data).
+                  ((eq v t)) ; True for string input (standard input data).
                   ((stringp v))
                   ((bufferp v)
                    (unless (buffer-live-p v)
@@ -304,14 +304,14 @@ Additional keyword arguments may also be passed in.
                  (setq input v))
                 (:output
                  (cond
-                  ((null output)) ; No output.
-                  ((eq output t)) ; String output (file path).
-                  ((stringp output)
-                   (when (string-equal output "")
+                  ((null v)) ; No output.
+                  ((eq v t)) ; String output (file path).
+                  ((stringp v)
+                   (when (string-equal v "")
                      (error "Empty string used as file-path")))
-                  ((bufferp output)
-                   (unless (buffer-live-p output)
-                     (error "Input buffer is invalid %S" output)))
+                  ((bufferp v)
+                   (unless (buffer-live-p v)
+                     (error "Output buffer is invalid %S" v)))
 
                   (t
                    (error "Output expected a buffer, string or nil")))
@@ -447,22 +447,21 @@ Optional keywords in KEYWORDS.
                 ((null v)) ; Ignore.
                 ((floatp v))
                 (t
-                 (error "Argument :idle expected a float, not a %S" (type-of v))))
+                 (error "Idle expected a float, not a %S" (type-of v))))
                (setq idle v))
 
               (:jobs
                (cond
-                ((null v)) ; Ignore.
-                ((eq v t)) ; String output (result vector)
-                ((symbolp v))
+                ((null v)) ; Ignore (detect).
+                ((integerp v)) ; Integer jobs.
                 (t
-                 (error "Output expected nil, t or a symbol")))
+                 (error "Jobs expected nil or an integer")))
                (setq jobs v))
 
               (:output
                (cond
                 ((null v)) ; Ignore.
-                ((eq v t)) ; String output (result vector)
+                ((eq v t)) ; True for string output.
                 ((functionp v)
                  (setq output-is-fn t))
                 (t
@@ -472,8 +471,7 @@ Optional keywords in KEYWORDS.
               (:progress-message
                (cond
                 ((null v)) ; Ignore.
-                ((stringp v)
-                 (setq output-is-fn t))
+                ((stringp v)) ; String message.
                 (t
                  (error "Progress-message expected nil or string, not a %S" (type-of v))))
                (setq progress-message v))
@@ -488,7 +486,6 @@ Optional keywords in KEYWORDS.
     (unless idle
       (setq idle 0.01))
 
-    ;; TODO: detect.
     (unless jobs
       (setq jobs
             (cond
