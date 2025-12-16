@@ -50,7 +50,6 @@
   "Use diff-ansi for `magit-revision-mode'."
   :type 'boolean)
 
-
 (defcustom diff-ansi-tool 'delta
   "Command to use for generating the diff."
   :type
@@ -976,7 +975,7 @@ Return the buffer used to write data into on success."
 
     ;; Update end.
     (unless target-buf
-      (setq end (- (point-max) end-trailing-chars)))
+      (setq end (- (buffer-size) end-trailing-chars)))
 
     ;; This is only an approximation, as the diff views may not be exactly compatible.
     (when preserve-point
