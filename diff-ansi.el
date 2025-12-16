@@ -597,12 +597,10 @@ Optional keywords in KEYWORDS.
   "Return the HEX color from FACE and ATTR."
   (declare (important-return-value t))
   (apply #'format
-         (cons
-          "#%02x%02x%02x"
-          (mapcar
-           ;; Shift by -8 to map the value returned by `color values':
-           ;; 0..65535 to 0..255 for `#RRGGBB` string formatting.
-           (lambda (n) (ash n -8)) (color-values (face-attribute face attr))))))
+         "#%02x%02x%02x"
+         ;; Shift by -8 to map the value returned by `color values':
+         ;; 0..65535 to 0..255 for `#RRGGBB` string formatting.
+         (mapcar (lambda (n) (ash n -8)) (color-values (face-attribute face attr)))))
 
 
 ;; ---------------------------------------------------------------------------
