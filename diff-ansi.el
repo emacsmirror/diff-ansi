@@ -102,7 +102,7 @@ Used for `progressive' and `multiprocess' methods."
 (defcustom diff-ansi-multiprocess-jobs nil
   "Number of simultaneous jobs to launch when using `multiprocess' method.
 
-A nil value detects the number of processes on the system (when supported)."
+A nil value auto-detects the number of processors using `num-processors'."
   :type '(choice (const :tag "Auto-detect" nil) (natnum :tag "Number of jobs")))
 
 (defcustom diff-ansi-verbose-progress nil
