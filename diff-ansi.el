@@ -97,13 +97,13 @@ This must take the diff content as the `standard-input'."
 (defcustom diff-ansi-chunks-size 16384
   "Number of characters to process at once.
 Used for `progressive' and `multiprocess' methods."
-  :type 'integer)
+  :type 'natnum)
 
 (defcustom diff-ansi-multiprocess-jobs nil
   "Number of simultaneous jobs to launch when using `multiprocess' method.
 
 A nil value detects the number of processes on the system (when supported)."
-  :type '(choice (const :tag "Auto-detect" nil) integer))
+  :type '(choice (const :tag "Auto-detect" nil) (natnum :tag "Number of jobs")))
 
 (defcustom diff-ansi-verbose-progress nil
   "When enabled, show the progress of progressive conversion in the echo area.
