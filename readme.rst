@@ -10,9 +10,9 @@ Available via `melpa <https://melpa.org/#/diff-ansi>`__.
 Motivation
 ==========
 
-*This package aims to expose the best possible diff rendering, to save time and improve reading diff's in Emacs!*
+*This package aims to expose the best possible diff rendering, to save time and improve reading diffs in Emacs!*
 
-When reading diff's, features such as side-by-side display, word-level changes and syntax highlighting
+When reading diffs, features such as side-by-side display, word-level changes and syntax highlighting
 can help understanding the changes that have been made.
 
 3rd party tools are available that support these features - this package aims to make those accessible within Emacs.
@@ -60,7 +60,7 @@ Customization
    Additional arguments to pass to delta.
 
 ``diff-ansi-extra-args-for-ydiff``
-   Additional arguments to pass to delta.
+   Additional arguments to pass to ydiff.
 
 ``diff-ansi-tool-custom``
    The command to use when ``diff-ansi-tool`` is set to ``'custom``.
@@ -88,7 +88,7 @@ but may be extended to adjust default behavior.
    Display progress for progressive conversion in the echo area for
    when ``diff-ansi-method`` is set to ``progressive``.
 
-``diff-ansi-chunks-size``: 8192
+``diff-ansi-chunks-size``: 16384
    The number of characters to process at a time for
    when ``diff-ansi-method`` is set to ``progressive`` or ``multiprocess``.
 
@@ -112,4 +112,4 @@ The package is available in melpa as ``diff-ansi``, here is an example with ``us
 .. code-block:: elisp
 
    (use-package diff-ansi
-     :commands (diff-ansi-mode diff-ansi-buffer)))
+     :commands (diff-ansi-mode diff-ansi-buffer))

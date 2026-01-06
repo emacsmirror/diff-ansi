@@ -957,7 +957,7 @@ Return the buffer used to write data into on success."
 
     (let ((method diff-ansi-method))
 
-      ;; Fallback to immediate when the task wont be split.
+      ;; Fallback to immediate when the task won't be split.
       (when (<= (- end beg) diff-ansi-chunks-size)
         (setq method 'immediate))
 
