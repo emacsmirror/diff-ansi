@@ -763,13 +763,12 @@ Store the result in TARGET-BUF when non-nil."
         (diff-ansi--call-process-pipe-chain diff-command :input diff-str :output (current-buffer))
         (setq end (point))
 
-        ;; Postpone activation until the timer can take itself as an argument.
-        (diff-ansi--with-advice ((#'timer-activate :override (lambda (&rest _) nil)))
-          (setq diff-ansi--ansi-color-timer (run-at-time 0.0 0.001 nil))
-          (timer-set-function diff-ansi--ansi-color-timer #'diff-ansi-progressive-highlight-impl
-                              (list
-                               (current-buffer) beg (cons beg end) diff-ansi--ansi-color-timer)))
-        (timer-activate diff-ansi--ansi-color-timer)))))
+        (letrec ((timer
+                  (run-at-time 0.0 0.001
+                               (lambda (buf beg range)
+                                 (diff-ansi-progressive-highlight-impl buf beg range timer))
+                               (current-buffer) beg (cons beg end))))
+          (setq diff-ansi--ansi-color-timer timer))))))
 
 
 ;; ---------------------------------------------------------------------------
