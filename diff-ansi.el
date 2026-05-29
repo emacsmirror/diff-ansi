@@ -624,7 +624,13 @@ Optional keywords in KEYWORDS.
                   black-color)
           diff-ansi--code-block-for-multiprocess-defs
           "(diff-ansi--ansi-color-apply-on-region-with-bg-impl (point-min) (point-max))"
-          "(prin1 (buffer-substring (point-min) (point-max)) #'external-debugging-output)"))
+          ;; Use `prin1-to-string' + `princ', not `prin1' direct to `external-debugging-output':
+          ;; the latter emits corrupt text-property offsets, breaking the parent's `read'
+          ;; (`args-out-of-range').
+          ;; See the GC-relocation-during-print hazard documented in Emacs `print.c'.
+          (concat
+           "(princ (prin1-to-string (buffer-substring (point-min) (point-max))) "
+           "#'external-debugging-output)")))
 
 
 ;; ---------------------------------------------------------------------------
