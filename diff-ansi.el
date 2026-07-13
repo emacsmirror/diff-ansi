@@ -657,7 +657,9 @@ Optional keywords in KEYWORDS.
       (list
        "delta"
        (format "--width=%d"
-               (diff-ansi--window-body-width-fixup (get-buffer-window (current-buffer)))))
+               (diff-ansi--window-body-width-fixup (get-buffer-window (current-buffer))))
+       ;; Otherwise long line will not be display fully, see: #21.
+       "--wrap-max-lines" "unlimited")
       diff-ansi-extra-args-for-delta))
     ('diff-so-fancy (append (list "diff-so-fancy") diff-ansi-extra-args-for-diff-so-fancy))
     ('ydiff
