@@ -636,6 +636,18 @@ Optional keywords in KEYWORDS.
 ;; ---------------------------------------------------------------------------
 ;; Diff Implementations
 
+(defun diff-ansi--window-body-width-fixup (window)
+  "Return the WINDOW width, compensating for text mode terminal."
+  (declare (important-return-value t))
+  (let ((width (window-body-width window)))
+    (cond
+     ((display-graphic-p (window-frame window))
+      width)
+     (t
+      ;; On a text terminal the last text column is reserved
+      ;; for the line-continuation glyph, see #20.
+      (1- width)))))
+
 (defun diff-ansi--command-preset-impl ()
   "Return the command to run delta."
   (declare (important-return-value t))
@@ -643,14 +655,17 @@ Optional keywords in KEYWORDS.
     ('delta
      (append
       (list
-       "delta" (format "--width=%d" (window-body-width (get-buffer-window (current-buffer)))))
+       "delta"
+       (format "--width=%d"
+               (diff-ansi--window-body-width-fixup (get-buffer-window (current-buffer)))))
       diff-ansi-extra-args-for-delta))
     ('diff-so-fancy (append (list "diff-so-fancy") diff-ansi-extra-args-for-diff-so-fancy))
     ('ydiff
      (append
       (list
        "ydiff" "--color=always"
-       (format "--width=%d" (/ (window-body-width (get-buffer-window (current-buffer))) 2)))
+       (format "--width=%d"
+               (/ (diff-ansi--window-body-width-fixup (get-buffer-window (current-buffer))) 2)))
       diff-ansi-extra-args-for-ydiff))
     ('custom diff-ansi-tool-custom)
     (_ (error "Unknown tool %S" diff-ansi-tool))))
